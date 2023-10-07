@@ -63,18 +63,18 @@ StudentRouter.put("/update/:id", converter, async (req, res) => {
 
 StudentRouter.delete("/delete/:id", async (req, res) => {
   const update = req.params.id;
-  const bike = await Studentmodel.findOne({ _id: update });
-  const userId_in_data = bike.userID;
-  const userId_in_req = req.body.userID;
+
   try {
-    if (userId_in_req !== userId_in_data) {
-      res.send({ msg: "Your not Authorized" });
-    } else {
-      const v = await Studentmodel.findByIdAndDelete({ _id: update });
-      res.send(`deleted the data of bike id ${v}`);
+    const student = await Studentmodel.findById(update);
+
+    if (!student) {
+      return res.status(404).send({ msg: "Student not found" });
     }
+
+    await Studentmodel.findByIdAndDelete(update);
+    res.send(`Deleted the data of student id ${update}`);
   } catch (error) {
-    res.send(error);
+    res.status(500).send(error);
   }
 });
 
