@@ -34,7 +34,7 @@ const StudentSchema = mongoose.Schema({
       required: false,
     },
     dateofbirth: {
-      type: Number,
+      type: String,
       required: false,
     },
     nameofpreviousschool: {
@@ -42,7 +42,7 @@ const StudentSchema = mongoose.Schema({
       required: false,
     },
     dateofpreviousschool: {
-      type: Number,
+     type: String,
       required: false,
     },
     natiolnallity: {
