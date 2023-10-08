@@ -44,22 +44,24 @@ StudentRouter.post("/add", converter, async (req, res) => {
   }
 });
 StudentRouter.put("/update/:id", converter, async (req, res) => {
-  const paylode = req.body;
-  const update = req.params.id;
-  const bike = await Studentmodel.findOne({ _id: update });
-  const userId_in_data = bike.userID;
-  const userId_in_req = req.body.userID;
   try {
-    if (userId_in_req !== userId_in_data) {
-      res.send({ msg: "Your not Authorized" });
-    } else {
-      const v = await Studentmodel.findByIdAndUpdate({ _id: update }, paylode);
-      res.send(`updated the data of bike id ${v}`);
+    const payload = req.body;
+    const update = req.params.id;
+
+    // Update the student record without checking authorization
+    const updatedStudent = await Studentmodel.findByIdAndUpdate(update, payload);
+
+    if (!updatedStudent) {
+      return res.status(404).send({ msg: "Student not found" });
     }
+
+    res.send(`Updated the data of student ID ${update}`);
   } catch (error) {
-    res.send(error);
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
   }
 });
+
 
 StudentRouter.delete("/delete/:id", async (req, res) => {
   const update = req.params.id;
