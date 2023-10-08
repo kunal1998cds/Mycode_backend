@@ -79,6 +79,30 @@ StudentRouter.delete("/delete/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
+StudentRouter.get("/search", async (req, res) => {
+  try {
+    const searchQuery = req.query.q; // Get the search query from the request query parameters
+
+    if (!searchQuery) {
+      return res.status(400).json({ msg: "Search query is required" });
+    }
+
+    // Perform a case-insensitive search by combining multiple fields
+    const students = await Studentmodel.find({
+      $or: [
+        { firstname: { $regex: searchQuery, $options: "i" } },
+        { secondname: { $regex: searchQuery, $options: "i" } },
+        { lastname: { $regex: searchQuery, $options: "i" } },
+        // Add more fields here as needed for your search
+      ],
+    });
+
+    res.send(students);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
 
 module.exports = {
   StudentRouter,
