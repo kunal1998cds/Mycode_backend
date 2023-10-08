@@ -81,6 +81,10 @@ const StudentSchema = mongoose.Schema({
       type: Number,
       required: false,
     },
+    admissionno: {
+      type: Number,
+      required: false,
+    },
   });
   
   const Studentmodel = mongoose.model("student", StudentSchema);
