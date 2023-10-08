@@ -36,6 +36,7 @@ StudentRouter.post("/add", converter, async (req, res) => {
       reasonofschoolleavingdues: req.body. reasonofschoolleavingdues,
       adharno: req.body. adharno,
       studentid: req.body. studentid,
+       admissionno: req.body.admissionno,
     });
     await new_student.save();
     res.status(200).json({ msg: "uploaded student data sucessfully" });
