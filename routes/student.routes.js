@@ -43,7 +43,7 @@ StudentRouter.post("/add", converter, async (req, res) => {
     res.send(error);
   }
 });
-StudentRouter.put("/update/:id", converter, async (req, res) => {
+StudentRouter.put("/update/:id",  async (req, res) => {
   try {
     const payload = req.body;
     const update = req.params.id;
